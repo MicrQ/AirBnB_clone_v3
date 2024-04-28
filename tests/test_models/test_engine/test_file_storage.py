@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -113,3 +114,36 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_state(self):
+        new_state = State(name="Hawassa")
+        storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = storage.get(State, new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
+
+    def test_get_city(self):
+        new_city = City(name="Hawassa")
+        storage.new(new_city)
+        key = "State.{}".format(new_city.id)
+        result = storage.get(City, new_city.id)
+        self.assertTrue(result.id, new_city.id)
+        self.assertIsInstance(result, City)
+
+    def test_get_place(self):
+        new_place = Place(name="Hawassa")
+        storage.new(new_place)
+        key = "Place.{}".format(new_place.id)
+        result = storage.get(Place, new_place.id)
+        self.assertTrue(result.id, new_place.id)
+        self.assertIsInstance(result, Place)
+
+    def test_count(self):
+        """ testing the count method of file storage"""
+        numOfAll = storage.count()
+        numOfState = storage.count(State)
+        storage.new(State(name="Bahir Dar"))
+
+        self.assertEqual(numOfAll, storage.count() - 1)
+        self.assertEqual(numOfState, storage.count(State) - 1)

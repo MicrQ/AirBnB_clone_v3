@@ -86,4 +86,6 @@ class FileStorage:
         """ a function that returns number of object for a given class
             if no class is given, number of all objects
         """
+        if cls and cls not in classes.values():
+            return None
         return (len(self.all(cls)) if cls else len(self.all()))
