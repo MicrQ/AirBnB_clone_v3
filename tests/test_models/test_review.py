@@ -113,8 +113,17 @@ class TestReview(unittest.TestCase):
         self.assertEqual(new_d["__class__"], "Review")
         self.assertEqual(type(new_d["created_at"]), str)
         self.assertEqual(type(new_d["updated_at"]), str)
-        self.assertEqual(new_d["created_at"], r.created_at.strftime(t_format))
-        self.assertEqual(new_d["updated_at"], r.updated_at.strftime(t_format))
+
+
+class TestOutput(unittest.TestCase):
+    """ testing the outputs """
+    def test_to_dict_values(self):
+        """test that values in dict returned from to_dict are correct"""
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        r = Review()
+        new_t = r.to_dict()
+        self.assertEqual(new_t["created_at"], r.created_at.strftime(t_format))
+        self.assertEqual(new_t["updated_at"], r.updated_at.strftime(t_format))
 
     def test_str(self):
         """test that the str method has the correct output"""

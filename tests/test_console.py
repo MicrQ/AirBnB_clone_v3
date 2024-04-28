@@ -7,6 +7,8 @@ import console
 import inspect
 import pep8
 import unittest
+from unittest.mock import patch
+from io import StringIO
 HBNBCommand = console.HBNBCommand
 
 
