@@ -16,6 +16,7 @@ from models.user import User
 def status():
     return jsonify({'status': 'OK'})
 
+
 @app_views.route('/stats')
 def stats():
     """ retrives the number of objects by type """
