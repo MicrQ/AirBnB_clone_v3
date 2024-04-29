@@ -7,13 +7,13 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states')
+@app_views.route('/states', methods=['GET'])
 def states():
     state_s = [state.to_dict() for state in storage.all('State').values()]
     return jsonify(state_s)
 
 
-@app_views.route('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods=['GET'])
 def state_by_id(state_id):
     """ retrives a state with a given id """
     state_s = [state.to_dict() for state in storage.all('State').values()
