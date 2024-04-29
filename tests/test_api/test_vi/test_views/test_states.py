@@ -25,10 +25,10 @@ class TestState(unittest.TestCase):
 
             states_id = [state.id for state in storage.all(State).values()]
             delete_id = states_id[0]
-            res = app.test_client().delete('/api/v1/states/{}'.format(delete_id))
-            states_id = [state.id for state in storage.all(State).values()]
-            self.assertEqual(200, res.status_code)
-            self.assertTrue(delete_id not in states_id)
+            with app.test_client().delete('/api/v1/states/{}'.format(delete_id)) as res:
+                states_id = [state.id for state in storage.all(State).values()]
+                self.assertEqual(200, res.status_code)
+                self.assertTrue(delete_id not in states_id)
 
     def test_post_state(self):
         number_of_states = len([state for state in storage.all(State).values()])
