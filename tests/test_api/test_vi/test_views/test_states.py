@@ -55,3 +55,7 @@ class TestState(unittest.TestCase):
             self.assertEqual(res.status_code, 200)
             self.assertEqual(res.get_json()['name'], test_name)
             self.assertNotEqual(name, res.get_json()['name'])
+
+
+if __name__ == "__main__":
+    unittest.main()
