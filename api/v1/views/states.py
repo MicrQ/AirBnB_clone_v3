@@ -59,7 +59,7 @@ def update_state_by_id(state_id):
 
     if state_to_update == []:
         abort(404)
-    if not update:
+    if update is None:
         abort(400, 'Not a JSON')
 
     state_to_update[0].name = update['name']
