@@ -24,3 +24,7 @@ class TestIndex(unittest.TestCase):
         res = app.test_client().get('/api/v1/status/')
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(json.loads(res.data)), 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
