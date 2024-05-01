@@ -55,7 +55,7 @@ def create_state():
 def update_state_by_id(state_id):
     """ updates a state with the given id """
     a_state = [state for state in storage.all(State).values()
-                       if state.id == state_id]
+               if state.id == state_id]
     given_json = request.get_json()
 
     if len(a_state) == 0:
