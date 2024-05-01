@@ -8,7 +8,7 @@ from models.user import User
 from models import storage
 
 
-@app_views.route('/users', methods=['GET'])
+@app_views.route('/users')
 def users():
     """ a route to retrive list of all users """
     users = [user.to_dict()
@@ -17,7 +17,7 @@ def users():
     return jsonify(users)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'])
+@app_views.route('/users/<user_id>')
 def get_user_by_id(user_id):
     """ used to retrive an user by its id """
     user = [user.to_dict()
@@ -38,7 +38,7 @@ def delete_user_by_id(user_id):
     storage.delete(user[0])
     storage.save()
 
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route('/users', methods=['GET', 'POST'])
