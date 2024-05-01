@@ -9,7 +9,8 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'])
 def states():
-    state_s = [state.to_dict() for state in storage.all('State').values()]
+    """ to retrive list of all state objects """
+    state_s = [state.to_dict() for state in storage.all(State).values()]
     return jsonify(state_s)
 
 
@@ -18,9 +19,9 @@ def state_by_id(state_id):
     """ retrives a state with a given id """
     state_s = [state.to_dict() for state in storage.all('State').values()
                if state.id == state_id]
-    if state_s == []:
+    if len(state_s) == 0:
         abort(404)
-    return jsonify(state_s)
+    return jsonify(state_s[0])
 
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE'])
@@ -53,20 +54,16 @@ def create_state():
 @app_views.route('/states/<state_id>', methods=['GET', 'PUT'])
 def update_state_by_id(state_id):
     """ updates a state with the given id """
-    state_to_update = [state.to_dict()
-                       for state in storage.all('State').values()
+    a_state = [state for state in storage.all(State).values()
                        if state.id == state_id]
-    update = request.get_json()
+    given_json = request.get_json()
 
-    if state_to_update == []:
+    if len(a_state) == 0:
         abort(404)
-    if update is None:
+    if given_json is None:
         abort(400, "Not a JSON")
 
-    state_to_update[0]['name'] = update['name']
-    for state in storage.all('State').values():
-        if state.id == state_id:
-            state.name = update['name']
+    a_state[0].name = given_json.get('name')
     storage.save()
 
-    return jsonify(state_to_update[0]), 200
+    return jsonify(a_state[0].to_dict()), 200
