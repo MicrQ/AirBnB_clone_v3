@@ -11,7 +11,7 @@ from models.state import State
 def states():
     """ to retrive list of all state objects """
     state_s = [state.to_dict() for state in storage.all(State).values()]
-    return jsonify(state_s)
+    return jsonify(state_s), 200
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
@@ -21,10 +21,10 @@ def state_by_id(state_id):
                if state.id == state_id]
     if len(state_s) == 0:
         abort(404)
-    return jsonify(state_s[0])
+    return jsonify(state_s[0]), 200
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state_by_id(state_id):
     """ deletes a state with the given id """
     a_state = [state for state in storage.all(State).values()]
@@ -35,7 +35,7 @@ def delete_state_by_id(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """ creates a state """
     given_json = request.get_json()
