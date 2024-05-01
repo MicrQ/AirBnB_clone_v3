@@ -13,7 +13,7 @@ def states():
     return jsonify(state_s)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def state_by_id(state_id):
     """ retrives a state with a given id """
     state_s = [state.to_dict() for state in storage.all('State').values()
@@ -50,7 +50,7 @@ def create_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'PUT', 'DELETE'])
+@app_views.route('/states/<state_id>', methods=['GET', 'PUT'])
 def update_state_by_id(state_id):
     """ updates a state with the given id """
     state_to_update = [state.to_dict()
